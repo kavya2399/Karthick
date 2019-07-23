@@ -1,0 +1,20 @@
+CREATE or REPLACE PACKAGE BODY my_pack IS
+  FUNCTION add_num(x number, y number) return number is
+  v_num number;
+  BEGIN
+    v_num := x+y;
+    return v_num;
+  END add_num;
+  FUNCTION AOR(l number, b number) return number is
+  v_aor number;
+  BEGIN
+    v_aor := l*b;
+    return v_aor;
+  END aor;
+  PROCEDURE update_sal(p_empno number, p_sal number) is
+  BEGIN
+    UPDATE emp SET sal = p_sal WHERE empno=p_empno;
+    COMMIT;
+  END update_sal;
+END my_pack;
+/

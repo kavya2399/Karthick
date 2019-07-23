@@ -1,0 +1,6 @@
+CREATE OR REPLACE function area_tri (breadth number, height number) return number is
+v_area number;
+begin
+v_area := 0.5 * breadth * height;
+return v_area;
+end area_tri;

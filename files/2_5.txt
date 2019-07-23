@@ -1,0 +1,34 @@
+DECLARE
+  CURSOR c1 is select s.student_code, student_name, subject1, subject2, subject3 FROM student_masters s JOIN student_marks sm ON (s.student_code = sm.student_code) WHERE dept_code = &dept_code;
+  v_c1 c1%rowtype;
+  total number;
+  percentage number;
+  grade varchar2(1); 
+BEGIN
+  OPEN c1;
+  IF SQL%notfound THEN
+    RAISE no_data_found;
+  ELSE
+    LOOP  
+      FETCH c1 into v_c1;
+      total := v_c1.subject1+v_c1.subject2+v_c1.subject3;
+      percentage := total/3;
+      EXIT when c1%notfound;
+      IF v_c1.subject1>60 and v_c1.subject2>60 and v_c1.subject3>60 and percentage>=80 THEN
+        grade := 'A';
+      ELSIF v_c1.subject1>60 and v_c1.subject2>60 and v_c1.subject3>60 and percentage>=70 and percentage<80 THEN
+        grade := 'B';
+      ELSIF v_c1.subject1>60 and v_c1.subject2>60 and v_c1.subject3>60 and percentage>=60 and percentage<70 THEN
+        grade := 'C';
+      ELSE
+        grade := 'D';
+      END IF;
+      dbms_output.put_line(v_c1.student_code||'  '||v_c1.student_name||'  '||v_c1.subject1||'  '||v_c1.subject2||'  '||v_c1.subject3||'  '||total||'  '||percentage||'  '||grade);
+    END LOOP;
+  END IF;
+  CLOSE C1;
+EXCEPTION
+ WHEN no_data_found THEN
+    dbms_output.put_line('Invalid department code entered. Try entering a valid one.');
+END;
+/

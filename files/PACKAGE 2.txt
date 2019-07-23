@@ -1,0 +1,30 @@
+CREATE OR REPLACE PACKAGE area_pack IS
+  FUNCTION sqr_area (rad number) return number;
+  FUNCTION tri_area (b number, h number) return number;
+  FUNCTION cir_area (rad number) return number ;
+END area_pack;
+/
+
+
+
+CREATE OR REPLACE PACKAGE BODY area_pack IS
+  FUNCTION sqr_area (rad number) return number is
+          v_sqr_area number(3);
+          BEGIN
+            v_sqr_area := rad * rad;
+           return  v_sqr_area;
+  END sqr_area;
+  FUNCTION tri_area (b number, h number) return number is
+  v_tri_area number;
+  BEGIN
+    v_tri_area := 0.5 * b * h;
+    return v_tri_area ;
+  END tri_area;
+  FUNCTION cir_area (rad number) return number is
+  v_cir_area number;
+  BEGIN
+    v_cir_area := 3.14 * rad * rad;
+    return v_cir_area ;
+  END cir_area;
+END area_pack;
+/

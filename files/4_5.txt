@@ -1,0 +1,10 @@
+create or replace function f_ctc(p_staff_code staff_masters.staff_code%type) return number is
+  v_ctc number;
+  v_sal number;
+  v_exp number;
+begin
+  select staff_sal into v_sal from staff_masters where staff_code = p_staff_code;
+  select to_char(sysdate-hiredate,'YYYY') into v_exp from staff_masters where staff_code = p_staff_code;
+  IF v_exp 
+    
+end;

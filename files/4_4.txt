@@ -1,0 +1,18 @@
+create or replace procedure find_mgr
+( p_staff_code IN OUT staff_masters.staff_code%type,
+  P_staff_name OUT staff_masters.staff_name%type,
+  p_dept_code OUT staff_masters.dept_code%type,
+  p_mgr_name OUT staff_masters.staff_name%type) is
+BEGIN
+  SELECT s.staff_code, s.staff_name, s.dept_code, m.staff_name mgr_name INTO p_staff_code, p_staff_name, p_dept_code, p_mgr_name FROM staff_masters s join staff_masters m on (s.mgr_code=m.staff_code) WHERE s.staff_code = p_staff_code order by s.staff_code;
+END;
+
+DECLARE
+  v_staff_name staff_masters.staff_name%type;
+  v_dept_code staff_masters.dept_code%type;
+  v_mgr_name staff_masters.staff_name%type;
+  v_staff_code number := &staff_code;
+BEGIN
+  find_mgr(v_staff_code,v_staff_name,v_dept_code,v_mgr_name);
+  dbms_output.put_line(v_staff_name||' '||v_dept_code||' '||' '||v_mgr_name);  
+END;

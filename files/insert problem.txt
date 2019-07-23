@@ -1,0 +1,13 @@
+DECLARE
+  type dept_type is table of dept%rowtype
+  index by binary_integer;
+  tab_dept dept_type;
+  x number := 1;
+BEGIN
+  FOR i in 1..3 LOOP
+    select * into tab_dept(i) from dept where rownum = x;
+    insert into dept_dup(deptno,dname,loc) values(tab_dept(i).deptno, tab_dept(i).dname, tab_dept(i).loc);
+    x := x+1;
+  END LOOP;
+END;
+/
